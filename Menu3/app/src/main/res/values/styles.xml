@@ -1,0 +1,75 @@
+<resources>
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardEdgeColor">@color/colorPrimary</item>
+        <item name="cardEdgeFadeColor">@color/colorPrimary</item>
+        <item name="cardEdgeSecondaryColor">@color/cardEdgeSecondaryColor</item>
+        <item name="cardFillColor">@color/colorDarkly</item>
+        <item name="BG1">@color/colorDarkly</item>
+        <item name="BG2">@color/colorPrimaryDark</item>
+        <item name="ButtonBG1">@color/ButtonBG1</item>
+        <item name="ButtonBG2">@color/ButtonBG2</item>
+    </style>
+
+    <style name="DailyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardEdgeColor">@color/cardEdgeColor</item>
+        <item name="cardEdgeFadeColor">@color/cardEdgeColor</item>
+        <item name="cardEdgeSecondaryColor">@color/gray</item>
+        <item name="cardFillColor">@color/cardFillColor</item>
+        <item name="BG1">@color/BGDay</item>
+        <item name="BG2">@color/BGDay</item>
+        <item name="ButtonBG1">@color/BGDay</item>
+        <item name="ButtonBG2">@color/ButtonBG2D</item>
+    </style>
+
+    <style name="DeusAge" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/Gold</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/Gold</item>
+        <item name="cardEdgeColor">@color/Gold</item>
+        <item name="cardEdgeFadeColor">@color/Gold</item>
+        <item name="cardEdgeSecondaryColor">@color/DBG2</item>
+        <item name="cardFillColor">@color/colorDarkly</item>
+        <item name="BG1">@color/DBG1</item>
+        <item name="BG2">@color/DBG2</item>
+        <item name="ButtonBG1">@color/ButtonBG1</item>
+        <item name="ButtonBG2">@color/ButtonBG2</item>
+    </style>
+
+    <style name="MinimalisticTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardEdgeColor">@color/cardEdgeColor</item>
+        <item name="cardEdgeFadeColor">@color/Nothing</item>
+        <item name="cardEdgeSecondaryColor">@color/gray</item>
+        <item name="cardFillColor">@color/cardFillColor</item>
+        <item name="BG1">@color/BGDay</item>
+        <item name="BG2">@color/BGDay</item>
+        <item name="ButtonBG1">@color/Nothing</item>
+        <item name="ButtonBG2">@color/Nothing</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

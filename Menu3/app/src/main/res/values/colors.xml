@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="barColor">#1F96FF</color>
+    <color name="colorPrimary">#1F96FF</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#1F96FF</color>
+
+    <color name="colorPrimaryD">#444440</color>
+    <color name="colorPrimaryDarkD">#f6f6f6</color>
+    <color name="colorAccentD">#fff7f7</color>
+    <color name="colorDarkly">#000000</color>
+
+    <color name="cardEdgeColor">#000000</color>
+    <color name="cardEdgeSecondaryColor">#00456b</color>
+    <color name="cardFillColor">#ffffff</color>
+
+    <color name="BGDay">#f6f6f6</color>
+    <color name="ButtonBG1">#000000</color>
+    <color name="ButtonBG2">#2e2e2e</color>
+
+    <color name="ButtonBG2D">#d5d5d5</color>
+    <color name="ButtonBG1D">#efefef</color>
+
+    <color name="Gold">#ffbb00</color>
+    <color name="DBG1">#322b21</color>
+    <color name="DBG2">#e7d58b</color>
+
+
+    <color name="halfVisibleWhite">#abffffff</color>
+    <color name="Nothing">#00ffffff</color>
+    <color name="White">#ffffff</color>
+
+    <color name="gray">#444440</color>
+</resources>

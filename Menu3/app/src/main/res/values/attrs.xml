@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <attr name="cardEdgeColor" format="reference" />
+    <attr name="cardEdgeFadeColor" format="reference" />
+    <attr name="cardEdgeSecondaryColor" format="reference" />
+    <attr name="cardFillColor" format="reference" />
+    <attr name="BG1" format="reference" />
+    <attr name="BG2" format="reference" />
+    <attr name="ButtonBG1" format="reference" />
+    <attr name="ButtonBG2" format="reference" />
+</resources>

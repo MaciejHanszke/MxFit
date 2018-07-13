@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+
+    <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
+         design guidelines. -->
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="switch_notifications_enable"
+        android:title="@string/pref_notifications_enable" />
+
+    <Preference
+        android:dependency="switch_notifications_enable"
+        android:key="btnDateFilter"
+        android:title="Set Time" />
+    <SwitchPreference
+        android:dependency="switch_notifications_enable"
+        android:defaultValue="false"
+        android:key="switch_notifications_vibrate"
+        android:title="Vibrate" />
+    <SwitchPreference
+        android:dependency="switch_notifications_enable"
+        android:defaultValue="false"
+        android:key="switch_notifications_ringtone"
+        android:title="Ringtone" />
+    <RingtonePreference
+        android:defaultValue="content://settings/system/notification_sound"
+        android:dependency="switch_notifications_ringtone"
+        android:key="notifications_ringtone"
+        android:ringtoneType="notification"
+        android:title="Ringtone" />
+</PreferenceScreen>
