@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
+import com.mxfit.mentix.menu3.Utils.ColorLineMethods;
 import com.pavelsikun.seekbarpreference.SeekBarPreference;
 
 import java.util.List;

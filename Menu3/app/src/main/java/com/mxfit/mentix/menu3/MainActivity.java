@@ -9,7 +9,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -54,16 +53,25 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.mxfit.mentix.menu3.HistoryPackage.HistoryFragment;
+import com.mxfit.mentix.menu3.PushupsPackage.PushupsFragment;
+import com.mxfit.mentix.menu3.RunningPackage.MapsFragment;
+import com.mxfit.mentix.menu3.SitupsPackage.SitupsActivity;
+import com.mxfit.mentix.menu3.SitupsPackage.SitupsFragment;
+import com.mxfit.mentix.menu3.TrainingsPackage.TrainingFragment;
+import com.mxfit.mentix.menu3.Utils.*;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import me.grantland.widget.AutofitTextView;
 import static android.graphics.drawable.GradientDrawable.Orientation.TOP_BOTTOM;
+import static com.mxfit.mentix.menu3.GlobalValues.*;
 import static java.lang.Math.round;
 
 
@@ -81,12 +89,13 @@ public class MainActivity extends AppCompatActivity
     DatabasePremadesHelper runDb;
     Date date;
     DateFormat dateFormat;
-    String dbTableName;
+    public String dbTableName;
+    SaveFileCalendar saveFileCalendar;
 
     private GoogleMap mMap;
     LocationManager locationManager;
     private Location mLastLocation;
-    NavigationView navigationView;
+    public NavigationView navigationView;
     boolean exists = true;
     boolean existsUpd = true;
 
@@ -96,14 +105,14 @@ public class MainActivity extends AppCompatActivity
     private boolean mapVisibility = false;
     private boolean TrackCamera = true;
     private boolean isTrackerInitialized = false;
-    protected boolean isInTraining = false;
+    public boolean isInTraining = false;
     //wybral goal
-    private boolean hasGoal = true;
+    private boolean hasChosenGoal = true;
     //ukonczyl goal
     private boolean hasFinishedGoal = false;
 
     LatLng last = new LatLng(0.0, 0.0);
-    LatLng zero = new LatLng(0.0, 0.0);
+    public LatLng zero = new LatLng(0.0, 0.0);
     LatLng locations[] = new LatLng[20];
     int locationsArraySize = 0;
     private float distance = 0;
@@ -123,12 +132,12 @@ public class MainActivity extends AppCompatActivity
     String curTime;
     RelativeLayout mapVis;
     RelativeLayout fragVis;
-    NumberFormat formatter;
+    public NumberFormat formatter;
     FragmentManager manager;
     long storeSeconds;
-    int themeNumber;
+    public int themeNumber;
 
-    static MainActivity instance;
+    public static MainActivity instance;
 
 
     double AVSspeed = 0.0;
@@ -142,39 +151,9 @@ public class MainActivity extends AppCompatActivity
 
     StopWatch timer = new StopWatch();
     int REFRESH_RATE = 1000;
-    SharedPreferences prefs;
-    boolean AlarmEnabled;
 
-    //trainings
-    int day = 1;
-    int traininglevel = 1;
-    int rday = 1;
-    float goal = 1;
-    int pushupsDone = 0;
-    String lastPushupDate;
-    String lastRunDate;
-    boolean Synchronised = false;
-    SaveFileCalendar saveFileCalendar;
-    int PUdateCount = 0;
-    int RdateCount = 0;
 
-    //Settings preferences
-    int welcomeScreen = 0;
-    int REFRESH = 2;
-
-    //checkLinePrefs()
-    boolean isCustomLine;
-    int LineColor1;
-    boolean isMultiColorLine;
-    int LineColor2;
-    boolean goingUp = true;
-    int TempColor;
-    int Step = 20;
-    int ColorIterator;
-    double stepColors[];
-    double tempColors[];
     ColorLineMethods colorLineMethods;
-    private boolean FirstZoom = true;
 
     Handler mHandler = new Handler() {
         @Override
@@ -233,41 +212,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void saveTrainingData() {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        editor.putInt("Pushups_day", day);
-        editor.putInt("Training_level", traininglevel);
-        editor.putInt("Pushups_number", pushupsDone);
-        editor.putInt("Pushups_break_number", PUdateCount);
-        editor.putString("Date_pushup", lastPushupDate);
-
-        editor.putInt("Running_day", rday);
-        editor.putFloat("Running_goal", goal);
-        editor.putInt("Running_break_number", RdateCount);
-        editor.putString("Date_running", lastRunDate);
-
-        editor.putBoolean("Synchronise_Pushups_Running", Synchronised);
-        editor.apply();
-
-    }
-
-    public void loadTrainingData(){
-        day = prefs.getInt("Pushups_day",1);
-        traininglevel = prefs.getInt("Training_level",1);
-        pushupsDone = prefs.getInt("Pushups_number",0);
-        PUdateCount = prefs.getInt("Pushups_break_number",0);
-        lastPushupDate = prefs.getString("Date_pushup", null);
-
-        rday = prefs.getInt("Running_day",1);
-        goal = prefs.getFloat("Running_goal", (float) 1.0);
-        RdateCount = prefs.getInt("Running_break_number",0);
-        lastRunDate = prefs.getString("Date_running", null);
-
-        Synchronised = prefs.getBoolean("Synchronise_Pushups_Running",false);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -314,6 +258,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.activity_main);
 
 
@@ -693,7 +638,7 @@ public class MainActivity extends AppCompatActivity
             double MenuDist = distance/1000.0;
             dist = formatter.format(MenuDist);
             txtMenuDistance.setText(dist);
-            if(hasGoal)
+            if(hasChosenGoal)
             {
                 double CurGoalDist = goaldistance/1000;
                 txtMenuCurGoal.setText(formatter.format(CurGoalDist));
@@ -839,7 +784,7 @@ public class MainActivity extends AppCompatActivity
             setTheme(R.style.MinimalisticTheme);
     }
 
-    protected void showRunning() {
+    public void showRunning() {
         if (!(fragment instanceof MapsFragment)) {
             fragment = MapsFragment.newInstance(dist,AVSspeed,formatter.format(goaldistance/1000),goal,hasFinishedGoal,currentTime);
         }
@@ -871,7 +816,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showTraining() {
         if (!(fragment instanceof TrainingFragment)) {
-            fragment = TrainingFragment.newInstance(day,traininglevel,goal);
+            fragment = TrainingFragment.newInstance(pushupsDay, pushupsTraininglevel,goal);
         }
 
         if (fragment != null) {
@@ -881,9 +826,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    protected void showPushups() {
+    public void showPushups() {
         if (!(fragment instanceof PushupsFragment)) {
-            fragment = PushupsFragment.newInstance(day,traininglevel);
+            fragment = PushupsFragment.newInstance(pushupsDay, pushupsTraininglevel);
         }
 
         if (fragment != null) {
@@ -918,6 +863,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_running)  showRunning();
         else if (id == R.id.nav_pushups)  showPushups();
         else if (id == R.id.nav_history)  showHistory();
+        else if (id == R.id.nav_situps)   showSitups();
 
 
         if(id != R.id.nav_running)
@@ -953,6 +899,19 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void showSitups() {
+        if (!(fragment instanceof SitupsFragment)) {
+            fragment = SitupsFragment.newInstance(situpsDay, situpsTraininglevel);
+        }
+
+        if (fragment != null) {
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.mainLayout,
+                    fragment,
+                    fragment.getTag()).commit();
+        }
+    }
+
     public void hideMainLayout()
     {
         mapVis.setVisibility(View.INVISIBLE);
@@ -977,7 +936,15 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, NotificationReceiver.class);
         intent.setAction(NotificationReceiver.ACTION_ALARM_RECEIVER);
         boolean isWorking = (PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_NO_CREATE) != null);
-        Date closestDate = saveFileCalendar.WhichDateFirst(lastPushupDate,lastRunDate);
+        ArrayList<String> dates = new ArrayList<>();
+        if(lastPushupDate!= null)
+            dates.add(lastPushupDate);
+        if(lastRunDate!=null)
+            dates.add(lastRunDate);
+        if(lastSitupDate!=null)
+            dates.add(lastSitupDate);
+
+        Date closestDate = saveFileCalendar.WhichDateFirst(dates);
 
         if(!isWorking && closestDate!=null) {
             Calendar calendar = Calendar.getInstance();
@@ -1060,7 +1027,7 @@ public class MainActivity extends AppCompatActivity
             mMap.addPolyline(PolOps.add(last, sydney));
             addDBLocation(sydney,5);
             distance += location.distanceTo(mLastLocation);
-            if(hasGoal)
+            if(hasChosenGoal)
             {
                 goaldistance += location.distanceTo(mLastLocation);
             }
@@ -1110,15 +1077,15 @@ public class MainActivity extends AppCompatActivity
     //trainingfragment
     @Override
     public void onFragmentInteraction(int pday, int TLevel, float pgoal) {
-        day = pday;
-        traininglevel = TLevel;
+        pushupsDay = pday;
+        pushupsTraininglevel = TLevel;
         goal = pgoal;
     }
 
     //pushupsfragment
     @Override
     public void onFragmentInteraction(int pday, int tlevel) {
-        day = pday;
-        traininglevel = tlevel;
+        pushupsDay = pday;
+        pushupsTraininglevel = tlevel;
     }
 }

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mxfit.mentix.menu3.Utils.CopyDatabase;
+import com.mxfit.mentix.menu3.Utils.DatabasePremadesHelper;
+
 import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         if(!database.exists())
         {
             myDb.getReadableDatabase();
-            new copyDatabase(this);
+            new CopyDatabase(this);
         }
         finish();
     }

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:orientation="vertical"
-    tools:context="com.mxfit.mentix.menu3.MapsFragment">
+    tools:context="com.mxfit.mentix.menu3.RunningPackage.MapsFragment">
 
     <TextView
         android:id="@+id/textView7"

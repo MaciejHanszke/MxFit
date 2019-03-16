@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:gravity="center_vertical"
-            tools:context="com.mxfit.mentix.menu3.MapsFragment" />
+            tools:context="com.mxfit.mentix.menu3.RunningPackage.MapsFragment" />
     </LinearLayout>
 
     <ScrollView
