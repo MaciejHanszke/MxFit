@@ -3,6 +3,7 @@ package com.mxfit.mentix.menu3;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -53,10 +54,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mxfit.mentix.menu3.HistoryPackage.HistoryFragment;
+import com.mxfit.mentix.menu3.LoginPackage.AccountFragment;
+import com.mxfit.mentix.menu3.LoginPackage.LoginActivity;
 import com.mxfit.mentix.menu3.PushupsPackage.PushupsFragment;
 import com.mxfit.mentix.menu3.RunningPackage.MapsFragment;
-import com.mxfit.mentix.menu3.SitupsPackage.SitupsActivity;
 import com.mxfit.mentix.menu3.SitupsPackage.SitupsFragment;
 import com.mxfit.mentix.menu3.TrainingsPackage.TrainingFragment;
 import com.mxfit.mentix.menu3.Utils.*;
@@ -254,6 +257,23 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().getItem(welcomeScreen).setChecked(true);
     }
 
+    FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            if (FireBaseConnection.user == null) {
+
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            } else {
+                //setDataToView(user);
+
+            }
+        }
+
+
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,8 +281,20 @@ public class MainActivity extends AppCompatActivity
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.activity_main);
 
+        FireBaseConnection.instatiate();
+        System.out.println(FireBaseConnection.user);
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (FireBaseConnection.user == null) {
+                    System.out.println(FireBaseConnection.user);
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
 
-
+        System.out.println(authListener);
 
         instance = this;
         Intent myIntent = new Intent(getBaseContext(), ClosingService.class);
@@ -840,6 +872,20 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void showAccount() {
+        if (!(fragment instanceof AccountFragment)) {
+            fragment = new AccountFragment(this);
+        }
+
+        if (fragment != null) {
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.mainLayout,
+                    fragment,
+                    fragment.getTag()).commit();
+        }
+
+    }
+
     private void showHistory() {
         if (!(fragment instanceof HistoryFragment)) {
             fragment = new HistoryFragment();
@@ -862,6 +908,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_trainings)     showTraining();
         else if (id == R.id.nav_running)  showRunning();
         else if (id == R.id.nav_pushups)  showPushups();
+        else if (id == R.id.nav_account)  showAccount();
         else if (id == R.id.nav_history)  showHistory();
         else if (id == R.id.nav_situps)   showSitups();
 
@@ -1087,5 +1134,12 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(int pday, int tlevel) {
         pushupsDay = pday;
         pushupsTraininglevel = tlevel;
+    }
+
+    public void signOut() {
+        FireBaseConnection.auth.signOut();
+        FireBaseConnection.refreshUser();
+        finish();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 }

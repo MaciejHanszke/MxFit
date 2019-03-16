@@ -2,6 +2,9 @@ package com.mxfit.mentix.menu3;
 
 import android.content.SharedPreferences;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class GlobalValues {
     //trainings
     public static int pushupsDay = 1;
@@ -46,6 +49,8 @@ public class GlobalValues {
     public static Float situpsCalibrationLow;
     public static Float situpsCalibrationHigh;
 
+    public static FirebaseAuth auth;
+    public static FirebaseUser user;
 
     public static boolean AlarmEnabled;
     public static boolean FirstZoom = true;

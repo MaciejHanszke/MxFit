@@ -17,9 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginPackage.ResetPasswordActivity"></activity>
-        <activity android:name=".LoginPackage.SignupActivity" />
-        <activity android:name=".LoginPackage.LoginActivity" />
+        <activity android:name=".LoginPackage.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".LoginPackage.SignupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".LoginPackage.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
@@ -72,9 +78,12 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".PushupsPackage.TrainingUnitChoiceActivity" />
-        <activity android:name=".RunningPackage.PreRunChoiceActivity" />
-        <activity android:name=".TrainingsPackage.DayChoiceActivity" />
+        <activity android:name=".PushupsPackage.TrainingUnitChoiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RunningPackage.PreRunChoiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TrainingsPackage.DayChoiceActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginPackage.AccountFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/useremail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/email_id"
+                android:textSize="30sp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Imie: " />
+
+            <TextView
+                android:id="@+id/usersurname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nazwisko: " />
+
+            <TextView
+                android:id="@+id/userphonenumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nr telefonu: " />
+
+            <TextView
+                android:id="@+id/userstreet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ulica: " />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/newPassword"
+                android:layout_toEndOf="@+id/progressBar"
+                android:focusableInTouchMode="true"
+                android:hint="@string/prompt_password"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                tools:layout_editor_absoluteX="126dp"
+                tools:layout_editor_absoluteY="125dp" />
+
+            <EditText
+                android:id="@+id/old_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/password"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="17dp"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="82dp" />
+
+            <Button
+                android:id="@+id/changePass"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/remove"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/btn_change"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="199dp"
+                tools:layout_editor_absoluteY="211dp" />
+
+            <EditText
+                android:id="@+id/newPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/changePass"
+                android:layout_alignParentStart="true"
+                android:focusableInTouchMode="true"
+                android:hint="@string/new_pass"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                tools:layout_editor_absoluteX="106dp"
+                tools:layout_editor_absoluteY="168dp" />
+
+            <Button
+                android:id="@+id/change_password_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/remove_user_button"
+                android:layout_alignStart="@+id/remove_user_button"
+                android:text="@string/change_password"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="312dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/remove"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/change_password_button"
+                    android:layout_alignStart="@+id/changePass"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/btn_remove"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="199dp"
+                    tools:layout_editor_absoluteY="259dp" />
+
+                <Button
+                    android:id="@+id/remove_user_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/change_password_button"
+                    android:layout_alignStart="@+id/changePass"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/remove_user"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="199dp"
+                    tools:layout_editor_absoluteY="259dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/sign_out"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimary"
+                android:text="@string/btn_sign_out"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="42dp"
+                tools:layout_editor_absoluteY="456dp" />
+        </LinearLayout>
+    </ScrollView>
