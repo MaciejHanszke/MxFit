@@ -3,8 +3,8 @@
     <color name="barColor">#1F96FF</color>
     <color name="colorPrimary">#1F96FF</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ADD7FF</color>
-    <color name="colorBG">#1F96FF</color>
+    <color name="colorAccent">#1F96FF</color>
+    <color name="colorBG">#82B1FF</color>
 
     <color name="colorPrimaryD">#444440</color>
     <color name="colorPrimaryDarkD">#f6f6f6</color>

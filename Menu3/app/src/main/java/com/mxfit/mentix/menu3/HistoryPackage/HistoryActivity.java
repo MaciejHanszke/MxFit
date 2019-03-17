@@ -16,14 +16,20 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mxfit.mentix.menu3.Utils.ColorLineMethods;
 import com.mxfit.mentix.menu3.Utils.DBNameFormatter;
 import com.mxfit.mentix.menu3.Utils.DatabaseHelper;
 import com.mxfit.mentix.menu3.MainActivity;
 import com.mxfit.mentix.menu3.R;
+import com.mxfit.mentix.menu3.Utils.FireBaseConnection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.mxfit.mentix.menu3.GlobalValues.*;
 import static java.lang.Math.round;
@@ -33,6 +39,7 @@ public class HistoryActivity extends AppCompatActivity implements OnMapReadyCall
 
     String DBname;
     String ActionBarName;
+    boolean saveToFireDB;
     DatabaseHelper myDb;
     List<LatLng> mapList;
     Double distance;
@@ -50,6 +57,7 @@ public class HistoryActivity extends AppCompatActivity implements OnMapReadyCall
         Bundle extras = getIntent().getExtras();
         DBname = extras.getString("tablename");
         ActionBarName = extras.getString("barname");
+        saveToFireDB = extras.getBoolean("saveToFireDB");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map2);
         mapFragment.getMapAsync(this);
@@ -79,6 +87,24 @@ public class HistoryActivity extends AppCompatActivity implements OnMapReadyCall
                     i++;
             }
         }
+        if(saveToFireDB) {
+            FireBaseConnection.db = FirebaseFirestore.getInstance();
+            Map<String, Object> run = new HashMap<>();
+
+            run.put("Distance", distance);
+            run.put("Time", time);
+            run.put("Points", mapList);
+
+            FireBaseConnection.db.collection("users").document(FireBaseConnection.user.getUid())
+                    .collection("runs").document(DBname).set(run)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            System.out.println("Sent!");
+                        }
+                    });
+        }
+
         DBNameFormatter dbf = new DBNameFormatter();
         TimeText.setText(dbf.reformatTime(time));
         DistanceText.setText(activity.formatter.format(distance)+"m");

@@ -13,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.mxfit.mentix.menu3.FireBaseConnection;
+import com.mxfit.mentix.menu3.Utils.FireBaseConnection;
 import com.mxfit.mentix.menu3.MainActivity;
 import com.mxfit.mentix.menu3.R;
 
@@ -32,7 +34,9 @@ public class AccountFragment extends Fragment {
             changePassword, remove, signOut;
     private TextView email;
     private TextView name;
+    private EditText newPassword;
     private boolean removeVisible = false;
+    private LinearLayout changePassLayout;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -70,6 +74,48 @@ public class AccountFragment extends Fragment {
             email.setText("E-mail: " + FireBaseConnection.user.getEmail());
 
         remove = (Button) view.findViewById(R.id.remove);
+        changePassLayout = (LinearLayout) view.findViewById(R.id.changePassLayout);
+
+        btnChangePassword = (Button) view.findViewById(R.id.change_password_button);
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(changePassLayout.getVisibility() == View.GONE)
+                    changePassLayout.setVisibility(View.VISIBLE);
+                else
+                    changePassLayout.setVisibility(View.GONE);
+            }
+        });
+
+        newPassword = (EditText) view.findViewById(R.id.newPassword);
+
+        changePassword = (Button) view.findViewById(R.id.changePass);
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (FireBaseConnection.user != null && !newPassword.getText().toString().trim().equals("")) {
+                    if (newPassword.getText().toString().trim().length() < 6) {
+                        newPassword.setError("Password too short, enter minimum 6 characters");
+                    } else {
+                        FireBaseConnection.user.updatePassword(newPassword.getText().toString().trim())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getActivity(), "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                                            ma.signOut();
+                                        } else {
+                                            Toast.makeText(getActivity(), "Failed to update password!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                } else if (newPassword.getText().toString().trim().equals("")) {
+                    newPassword.setError("Enter password");
+                }
+            }
+        });
+
         remove.setOnClickListener(new View.OnClickListener() {
 
             @Override

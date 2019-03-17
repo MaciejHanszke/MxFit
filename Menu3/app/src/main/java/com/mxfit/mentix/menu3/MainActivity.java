@@ -497,7 +497,7 @@ public class MainActivity extends AppCompatActivity
         mMap.clear();
         reinitializeFragButtons();
         txtDistance.setText(formatter.format(distance) + " m");
-        new ShowMap(instance, dbTableName.substring(2));
+        new ShowMap(instance, dbTableName.substring(2),true);
         dbTableName = null;
         if(goaldistance/1000<=goal) {
             hasFinishedGoal = false;
