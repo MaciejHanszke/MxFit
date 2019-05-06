@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.mxfit.mentix.menu3.Utils.ColorLineMethods;
 import com.mxfit.mentix.menu3.Utils.DBNameFormatter;
 import com.mxfit.mentix.menu3.Utils.DatabaseHelper;
@@ -93,7 +94,14 @@ public class HistoryActivity extends AppCompatActivity implements OnMapReadyCall
 
             run.put("Distance", distance);
             run.put("Time", time);
-            run.put("Points", mapList);
+            ArrayList<GeoPoint> pointList = new ArrayList<>();
+            for(int p = 0; p<mapList.size(); p++)
+            {
+                LatLng point = mapList.get(p);
+                pointList.add(new GeoPoint(point.latitude, point.longitude));
+            }
+
+            run.put("Points", pointList);
 
             FireBaseConnection.db.collection("users").document(FireBaseConnection.user.getUid())
                     .collection("runs").document(DBname).set(run)

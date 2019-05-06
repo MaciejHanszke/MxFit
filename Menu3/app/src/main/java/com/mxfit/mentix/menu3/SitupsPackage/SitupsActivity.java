@@ -358,15 +358,11 @@ public class SitupsActivity extends AppCompatActivity implements SensorEventList
                         everySitup++;
                         setSitups();
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                        } else {
-                            //deprecated in API 26
-                            v.vibrate(100);
-                        }
+                        vibrate();
                     }
                     if(clickable && currentSitups ==0)
                     {
+                        vibrate(500);
                         setSitups();
                         setCurrent();
                         clickable = false;
@@ -398,6 +394,19 @@ public class SitupsActivity extends AppCompatActivity implements SensorEventList
 
 
 
+    }
+
+    private void vibrate() {
+        vibrate(100);
+    }
+
+    private void vibrate(int millis){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(millis, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(millis);
+        }
     }
 
     @Override
